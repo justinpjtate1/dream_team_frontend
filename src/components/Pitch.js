@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 
 const Pitch = (props) => {
-    const [teamName, setTeamName] = useState("");
+    
 
-    const handleTeamNameInput = (e) => {
-        setTeamName(e.target.value)
-    }
+    
 
     return(
         <>
             <h1>Pitch</h1>
-            <input type="text" onChange={handleTeamNameInput}/>
-            <h3>{teamName}</h3>
+            <input type="text" onChange={(e) => props.handleTeamNameInput(e)}/>
+            <h3>{props.teamName}</h3>
             <ul>List view of pitch
                 <li>{props.dreamTeam.GK.player_name}</li>
                 <li>{props.dreamTeam.LB.player_name}</li>
@@ -26,7 +24,7 @@ const Pitch = (props) => {
                 <li>{props.dreamTeam.RS.player_name}</li>
             </ul>
 
-            <button>Save</button>
+            <button onClick={() => props.handleSave()}>Save</button>
 
         </>
         

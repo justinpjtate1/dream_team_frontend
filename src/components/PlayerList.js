@@ -12,6 +12,7 @@ const PlayerList = (props) => {
     const [clubFilterInput, setClubFilterInput] = useState("");
     const [position, setPosition] = useState("")
     const [playerSelected, setPlayerSelected] = useState({})
+    const [teamName, setTeamName] = useState("");
     const [dreamTeam, setDreamTeam] = useState({
         GK: {},
         LB: {},
@@ -69,9 +70,47 @@ const PlayerList = (props) => {
         setPlayerSelected("")
     }
 
+    const handleTeamNameInput = (e) => {
+        setTeamName(e.target.value)
+    }
+
+    const handleSave = () => {
+        axios.post(`${apiUrl}/custom_teams/new_team`, {
+            team_name: teamName,
+            user_id: localStorage.getItem('resource_owner_id') 
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+            }
+        })
+        .then((response) => {
+            let arrayToPost = []
+            Object.entries(dreamTeam).map(player => {
+                arrayToPost.push(
+                    {
+                        custom_team_id: response.data.id,
+                        player_id: player[1].id,
+                        position: player[0]
+                    }
+                )
+            })
+            axios.post(`${apiUrl}/custom_teams/save_players`, {
+                players: arrayToPost
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+                }
+            })
+        })
+    }
+
     return(
         <>
-            <Pitch dreamTeam={dreamTeam}/>
+            <Pitch dreamTeam={dreamTeam}
+                   handleSave={handleSave}
+                   handleTeamNameInput={handleTeamNameInput}
+                   teamName={teamName}
+                    />
             <h1>Player List</h1>
             <input type="text" placeholder="Player Name" onChange={handlePlayerInput}></input>
             <button onClick={handlePlayerFilter}>Filter</button>
@@ -79,12 +118,12 @@ const PlayerList = (props) => {
             <button onClick={handleClubFilter}>Filter</button>
             <div>
                 {playersToShow.map((player, index) => <PlayerListItem playerName={player.player_name}
-                                                                        clubName={player.club_name} 
-                                                                        key={index} index={index} 
-                                                                        handleAddPlayer={handleAddPlayer} 
-                                                                        onRadioButtonChange={onRadioButtonChange}
-                                                                        handlePlayerSelected={handlePlayerSelected}
-                                                        />)}
+                                                                      clubName={player.club_name} 
+                                                                      key={index} index={index} 
+                                                                      handleAddPlayer={handleAddPlayer} 
+                                                                      onRadioButtonChange={onRadioButtonChange}
+                                                                      handlePlayerSelected={handlePlayerSelected}
+                                                                    />)}
             </div>
         </>
         
