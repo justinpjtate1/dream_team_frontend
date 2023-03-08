@@ -11,6 +11,9 @@ import SignIn from './components/SignIn';
 import Profile from './components/Profile';
 import apiUrl from './apiConfig';
 import axios from 'axios';
+import LandingPage from './components/LandingPage';
+import CreateDreamTeamPage from './components/CreateDreamTeamPage';
+import ViewDreamTeamPage from './components/ViewDreamTeamPage';
 
 const App = (props) => {
   const [auth, setAuth] = useState(() => {
@@ -60,15 +63,22 @@ const App = (props) => {
   return(
     <div className='page'>
       <Router>
-        <nav>
+        {auth !== true ? (<nav>
           <Link to="/signup">Sign Up</Link>
           <Link to="/signin">Sign In</Link>
+        </nav>) : (<nav>
+          <Link to="/profile">Profile</Link>
+          <Link to="/create">Create a Team</Link>
+          <Link to="/view">View Teams</Link>
           <Link to="/" onClick={userSignedOut}>Sign Out</Link>
-        </nav>
+        </nav>)}
         <Routes>
           <Route path="/signup" element={auth !== true ? (<SignUp userSignedIn={userSignedIn} />) : (<Navigate replace to = {"/profile"} />)} />
           <Route path="/signin" element={auth !== true ? (<SignIn userSignedIn={userSignedIn} />) : (<Navigate replace to = {"/profile"} />)} />
           <Route path="/profile" element={auth === true ? (<Profile />) : (<Navigate replace to = {"/"} />)}/>
+          <Route path="/" element={auth !== true ? (<LandingPage />) : (<Navigate replace to = {"/profile"} />)} />
+          <Route path="/create" element={auth === true ? (<CreateDreamTeamPage />) : (<Navigate replace to = {"/"} />)}/>
+          <Route path="/view" element={auth === true ? (<ViewDreamTeamPage />) : (<Navigate replace to = {"/"} />)}/>
         </Routes>
       </Router>
     </div>
