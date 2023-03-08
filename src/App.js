@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -24,20 +24,20 @@ const App = (props) => {
     }
   })
 
-  // const [auth, setAuth] = useState(() => {
-  //   const apiRequest = axios.post(`${apiUrl}/pages/user_logged_in`, {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
-  //     }
-  //   })
-  //   .then((response) => {
-  //     return true
-  //   })
-  //   .catch((error) => {
-  //     return false
-  //   })
-  //   return apiRequest
-  // })
+  useEffect(() => {
+    if(auth === true) {
+      axios.get(`${apiUrl}/pages/user_logged_in`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+        }
+      })
+      .then((response) => setAuth(true))
+      .catch((error) => {
+        userSignedOut()
+        setAuth(false)
+      })
+    }
+  })
 
   const userSignedIn = (response) => {
     localStorage.setItem("refresh_token", response.data.refresh_token);
@@ -76,9 +76,9 @@ const App = (props) => {
           <Route path="/signup" element={auth !== true ? (<SignUp userSignedIn={userSignedIn} />) : (<Navigate replace to = {"/profile"} />)} />
           <Route path="/signin" element={auth !== true ? (<SignIn userSignedIn={userSignedIn} />) : (<Navigate replace to = {"/profile"} />)} />
           <Route path="/profile" element={auth === true ? (<Profile />) : (<Navigate replace to = {"/"} />)}/>
-          <Route path="/" element={auth !== true ? (<LandingPage />) : (<Navigate replace to = {"/profile"} />)} />
           <Route path="/create" element={auth === true ? (<CreateDreamTeamPage />) : (<Navigate replace to = {"/"} />)}/>
           <Route path="/view" element={auth === true ? (<ViewDreamTeamPage />) : (<Navigate replace to = {"/"} />)}/>
+          <Route path="/" element={auth !== true ? (<LandingPage />) : (<Navigate replace to = {"/profile"} />)} />
         </Routes>
       </Router>
     </div>
