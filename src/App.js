@@ -31,7 +31,6 @@ const App = (props) => {
           Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
         }
       })
-      .then((response) => setAuth(true))
       .catch((error) => {
         userSignedOut()
         setAuth(false)

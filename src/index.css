@@ -11,3 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.modal {
+  width: auto;
+  margin: 30px auto;
+  display: inline-block;
+  color: #232323;
+}
+
+.modal-body,.modal-header,.modal-footer {
+  background-color: #414141;
+  color: #FFF0EA;
+}
+
