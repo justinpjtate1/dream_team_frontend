@@ -8,7 +8,7 @@ const Pitch = (props) => {
     return(
         <>
             <h1>Pitch</h1>
-            <input type="text" onChange={(e) => props.handleTeamNameInput(e)}/>
+            {props.pageType !== "view" ? <input type="text" onChange={(e) => props.handleTeamNameInput(e)}/> : null}
             <h3>{props.teamName}</h3>
             <ul>List view of pitch
                 <li>{props.dreamTeam.GK.player_name}</li>
@@ -24,7 +24,7 @@ const Pitch = (props) => {
                 <li>{props.dreamTeam.RS.player_name}</li>
             </ul>
 
-            <button onClick={() => props.handleSave()}>Save</button>
+            {props.pageType !== "view" ? <button onClick={() => props.handleSave()}>Save</button> : null}
 
         </>
         

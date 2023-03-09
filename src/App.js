@@ -25,6 +25,10 @@ const App = (props) => {
   })
 
   useEffect(() => {
+    checkTokenValidity()
+  })
+
+  const checkTokenValidity = () => {
     if(auth === true) {
       axios.get(`${apiUrl}/pages/user_logged_in`, {
         headers: {
@@ -36,7 +40,7 @@ const App = (props) => {
         setAuth(false)
       })
     }
-  })
+  }
 
   const userSignedIn = (response) => {
     localStorage.setItem("refresh_token", response.data.refresh_token);

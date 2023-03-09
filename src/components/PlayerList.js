@@ -12,19 +12,32 @@ const PlayerList = (props) => {
     const [clubFilterInput, setClubFilterInput] = useState("");
     const [position, setPosition] = useState("")
     const [playerSelected, setPlayerSelected] = useState({})
-    const [teamName, setTeamName] = useState("");
-    const [dreamTeam, setDreamTeam] = useState({
-        GK: {},
-        LB: {},
-        LCB: {},
-        RCB: {},
-        RB: {},
-        LM: {},
-        LCM: {},
-        RCM: {},
-        RM: {},
-        LS: {},
-        RS: {},
+    const [teamName, setTeamName] = useState(() => {
+        if(props.teamName) {
+            return props.teamName
+        } else {
+            return ""
+        }
+    });
+    const [dreamTeam, setDreamTeam] = useState(() => {
+        if(props.dreamTeam) {
+            return props.dreamTeam
+        } else {
+            return {
+                GK: {},
+                LB: {},
+                LCB: {},
+                RCB: {},
+                RB: {},
+                LM: {},
+                LCM: {},
+                RCM: {},
+                RM: {},
+                LS: {},
+                RS: {},
+            }
+        }
+        
     })
 
     const handlePlayerInput = (e) => {
@@ -75,33 +88,78 @@ const PlayerList = (props) => {
     }
 
     const handleSave = () => {
-        axios.post(`${apiUrl}/custom_teams/new_team`, {
-            team_name: teamName,
-            user_id: localStorage.getItem('resource_owner_id') 
-        }, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
-            }
-        })
-        .then((response) => {
+        const returnArrayToPost = (teamId) => {
             let arrayToPost = []
-            Object.entries(dreamTeam).map(player => {
-                arrayToPost.push(
-                    {
-                        custom_team_id: response.data.id,
-                        player_id: player[1].id,
-                        position: player[0]
-                    }
-                )
-            })
-            axios.post(`${apiUrl}/custom_teams/save_players`, {
-                players: arrayToPost
+                Object.entries(dreamTeam).map(player => {
+                    arrayToPost.push(
+                        {
+                            custom_team_id: teamId,
+                            player_id: player[1].id,
+                            position: player[0]
+                        }
+                    )
+                })
+            return arrayToPost
+        }
+        if(props.pageType === "profile") {
+            axios.patch(`${apiUrl}/custom_teams/update_team`, {
+                custom_team_id: props.teamId,
+                custom_team_name: teamName
             }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
                 }
             })
-        })
+            .then((response) => {
+                
+                // let arrayToPost = []
+                // Object.entries(dreamTeam).map(player => {
+                //     arrayToPost.push(
+                //         {
+                //             custom_team_id: response.data.id,
+                //             player_id: player[1].id,
+                //             position: player[0]
+                //         }
+                //     )
+                // })
+                axios.post(`${apiUrl}/custom_teams/update_team_players`, {
+                    players: returnArrayToPost(props.teamId)
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+                    }
+                })
+            })
+        } else {
+            axios.post(`${apiUrl}/custom_teams/new_team`, {
+                team_name: teamName,
+                user_id: localStorage.getItem('resource_owner_id') 
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+                }
+            })
+            .then((response) => {
+                // let arrayToPost = []
+                // Object.entries(dreamTeam).map(player => {
+                //     arrayToPost.push(
+                //         {
+                //             custom_team_id: response.data.id,
+                //             player_id: player[1].id,
+                //             position: player[0]
+                //         }
+                //     )
+                // })
+                axios.post(`${apiUrl}/custom_teams/save_players`, {
+                    players: returnArrayToPost(response.data.id)
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+                    }
+                })
+            })
+        }
+            
     }
 
     return(
@@ -110,6 +168,7 @@ const PlayerList = (props) => {
                    handleSave={handleSave}
                    handleTeamNameInput={handleTeamNameInput}
                    teamName={teamName}
+                   pageType={props.pageType === "profile" ? "profile" : null}
                     />
             <h1>Player List</h1>
             <input type="text" placeholder="Player Name" onChange={handlePlayerInput}></input>
