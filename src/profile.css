@@ -1,10 +1,31 @@
-#profile-view {
+/* #team-list {
     display: grid;
     grid-template-columns: 0.25fr 0.4fr 0.35fr;
     grid-template-rows: 850px 1fr;
 }
 
 .team-list {
+    grid-column: 1;
+    grid-row: 1/2;
+}
+
+#full-pitch-container {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#search-container {
+    grid-column: 3;
+    grid-row: 1;
+} */
+
+#team-list {
+    display: grid;
+    grid-template-columns: 0.25fr 0.4fr 0.35fr;
+    grid-template-rows: 850px 1fr;
+}
+
+#all-teams {
     grid-column: 1;
     grid-row: 1/2;
 }

@@ -151,6 +151,8 @@ nav {
   margin-top: 0;
   border: solid;
   text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 button {
