@@ -14,6 +14,9 @@ import axios from 'axios';
 import LandingPage from './components/LandingPage';
 import CreateDreamTeamPage from './components/CreateDreamTeamPage';
 import ViewDreamTeamPage from './components/ViewDreamTeamPage';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 const App = (props) => {
   const [auth, setAuth] = useState(() => {
@@ -66,14 +69,11 @@ const App = (props) => {
   return(
     <div className='page'>
       <Router>
-        {auth !== true ? (<nav>
-          <Link to="/signup">Sign Up</Link>
-          <Link to="/signin">Sign In</Link>
-        </nav>) : (<nav>
-          <Link to="/profile">Profile</Link>
-          <Link to="/create">Create a Team</Link>
-          <Link to="/view">View Teams</Link>
-          <Link to="/" onClick={userSignedOut}>Sign Out</Link>
+      {auth !== true ? null : (<nav id="signed-in-nav-bar">
+          <Link to="/profile" className='nav-link'>Profile</Link>
+          <Link to="/create" className='nav-link'>Create a Team</Link>
+          <Link to="/view" className='nav-link'>View Teams</Link>
+          <Link to="/" className='nav-link' onClick={userSignedOut}>Sign Out</Link>
         </nav>)}
         <Routes>
           <Route path="/signup" element={auth !== true ? (<SignUp userSignedIn={userSignedIn} />) : (<Navigate replace to = {"/profile"} />)} />

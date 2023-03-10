@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import apiUrl from '../apiConfig';
 import ViewDreamTeamPage from './ViewDreamTeamPage';
+import '../profile.css';
 
 class Profile extends Component {
     constructor(props) {

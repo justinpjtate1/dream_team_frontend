@@ -1,0 +1,13 @@
+/* #flexgrid-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 0.5fr 0.5fr;
+}
+
+#full-pitch-container {
+    grid-template-columns: 1;
+}
+
+#search-container {
+    grid-template-columns: 2;
+} */

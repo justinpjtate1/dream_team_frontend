@@ -1,0 +1,5 @@
+#view-teams-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 0.3fr 0.7fr;
+}

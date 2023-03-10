@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PlayerList from './PlayerList';
-
+import '../create.css'
 import axios from 'axios';
 import apiUrl from '../apiConfig';
 

@@ -1,15 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgba(0, 0, 13, 0.85);
+  color: azure
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.index-background {
+  min-height: 100vh;
+  text-align: center;
+  background-image: url('player-background.jpeg');
+  background-size: cover;
+  opacity: 0.4;
+}
+
+.index-page {
+  text-align: center;
+  position: relative;
+}
+
+.index-items {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+#sign-up>input, #sign-up>button {
+  display: block;
+  margin: 15px auto;
+  height: 40px;
+  width: 250px; 
+  border-radius: 5px;
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+}
+
+#sign-up>button {
+  background-color: azure;
+  color: black;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+#margin-box {
+  text-align: center;
+}
+
+.background {
+  opacity: 0.5;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+
+nav {
+  background-color: rgba(0, 0, 0, 0.84);
+  padding: 10px;
+}
+
+.nav-link {
+  margin: 0px 10px;
+  color: azure;
+  text-decoration: none;
+}
+
+.index-link {
+  margin: 0px 10px;
+  padding: 10px;
+  background-color: azure;
+  text-decoration: none;
+  border-radius: 5px;
+  color: black
+
+}
+
+#pitch {
+  background-image: url('football-pitch.avif');
+  background-size: cover;
+  height: 706px;
+  width: 500px; 
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-evenly;
+
+}
+
+.player-kit-image {
+  height: 30px;
+  width: 30px;
+}
+
+.keeper-kit-image {
+  height: 30px;
+  width: 30px;
+}
+
+.player-line {
+  display: flex;
+  align-items: space-evenly;
+  justify-content: space-evenly;
+}
+
+.player-object {
+  text-align: center;
+  width: 105px
 }
 
 .modal {
@@ -22,5 +133,30 @@ code {
 .modal-body,.modal-header,.modal-footer {
   background-color: #414141;
   color: #FFF0EA;
+}
+
+.player-name {
+  background-color: azure;
+  color: black;
+  border: solid;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.club-name {
+  background-color: lightblue;
+  color: black;
+  margin-top: 0;
+  border: solid;
+  text-overflow: ellipsis;
+}
+
+button {
+  background-color: azure;
+  color: black;
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
 }
 

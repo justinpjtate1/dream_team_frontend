@@ -36,19 +36,18 @@ const SignUp = (props) => {
     }
 
     return(
-        <>
-            <br></br>
-            <h1>Sign Up</h1>
-            <label>email</label>
-            <input type="text" onChange={handleEmailInput}></input>
-            <label>Password</label>
-            <input type="text" onChange={handlePasswordInput}></input>
-            <label>Confirm Password</label>
-            <input type="text" onChange={handleConfirmPasswordInput}></input>
-            <button onClick={handleSubmit}>Sign Up</button>
-            <br></br>
-            <p>{signUpErrorMessage}</p>
-        </>
+        <div className="index-page">
+            <div className="index-background"> </div>
+            <div className="index-items" id="sign-up">
+                <h1>Sign Up</h1>
+                <input type="text" placeholder="Email" onChange={handleEmailInput}></input>
+                <input type="text" placeholder="Password" onChange={handlePasswordInput}></input>
+                <input type="text" placeholder="Confirm Password"onChange={handleConfirmPasswordInput}></input>
+                <button onClick={handleSubmit}>Sign Up</button>
+                <p>{signUpErrorMessage}</p>
+            </div>
+            
+        </div>
     )
 }
 

@@ -111,17 +111,6 @@ const PlayerList = (props) => {
                 }
             })
             .then((response) => {
-                
-                // let arrayToPost = []
-                // Object.entries(dreamTeam).map(player => {
-                //     arrayToPost.push(
-                //         {
-                //             custom_team_id: response.data.id,
-                //             player_id: player[1].id,
-                //             position: player[0]
-                //         }
-                //     )
-                // })
                 axios.post(`${apiUrl}/custom_teams/update_team_players`, {
                     players: returnArrayToPost(props.teamId)
                 }, {
@@ -140,16 +129,6 @@ const PlayerList = (props) => {
                 }
             })
             .then((response) => {
-                // let arrayToPost = []
-                // Object.entries(dreamTeam).map(player => {
-                //     arrayToPost.push(
-                //         {
-                //             custom_team_id: response.data.id,
-                //             player_id: player[1].id,
-                //             position: player[0]
-                //         }
-                //     )
-                // })
                 axios.post(`${apiUrl}/custom_teams/save_players`, {
                     players: returnArrayToPost(response.data.id)
                 }, {
@@ -170,19 +149,21 @@ const PlayerList = (props) => {
                    teamName={teamName}
                    pageType={props.pageType === "profile" ? "profile" : null}
                     />
-            <h1>Player List</h1>
-            <input type="text" placeholder="Player Name" onChange={handlePlayerInput}></input>
-            <button onClick={handlePlayerFilter}>Filter</button>
-            <input type="text" placeholder="Club" onChange={handleClubInput}></input>
-            <button onClick={handleClubFilter}>Filter</button>
-            <div>
-                {playersToShow.map((player, index) => <PlayerListItem playerName={player.player_name}
-                                                                      clubName={player.club_name} 
-                                                                      key={index} index={index} 
-                                                                      handleAddPlayer={handleAddPlayer} 
-                                                                      onRadioButtonChange={onRadioButtonChange}
-                                                                      handlePlayerSelected={handlePlayerSelected}
-                                                                    />)}
+            <div id="search-container">
+                <h1>Player List</h1>
+                <input type="text" placeholder="Player Name" onChange={handlePlayerInput}></input>
+                <button onClick={handlePlayerFilter}>Filter</button>
+                <input type="text" placeholder="Club" onChange={handleClubInput}></input>
+                <button onClick={handleClubFilter}>Filter</button>
+                <div>
+                    {playersToShow.map((player, index) => <PlayerListItem playerName={player.player_name}
+                                                                        clubName={player.club_name} 
+                                                                        key={index} index={index} 
+                                                                        handleAddPlayer={handleAddPlayer} 
+                                                                        onRadioButtonChange={onRadioButtonChange}
+                                                                        handlePlayerSelected={handlePlayerSelected}
+                                                                        />)}
+                </div>
             </div>
         </>
         
