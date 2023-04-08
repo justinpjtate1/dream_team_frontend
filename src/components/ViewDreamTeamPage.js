@@ -74,11 +74,13 @@ class ViewDreamTeamPage extends Component {
 
     render() {
         return(
-            <>
-            <h1>See all teams:</h1>
-            <TeamList teams={this.state.teams} handleSelectedTeam={this.handleSelectedTeam} filterSelectedTeam={this.filterSelectedTeam} pageType={this.state.pageType} />
-            {this.state.selectedTeam != null ? <><Pitch dreamTeam={this.state.dreamTeam} pageType={this.state.pageType} teamId={this.state.selectedTeamId} teamName={this.state.selectedTeamName}/></> : null}
-            </>
+            <div id="view-team-container">
+                <h1>See all teams:</h1>
+                <div className="page-container">
+                    <TeamList teams={this.state.teams} handleSelectedTeam={this.handleSelectedTeam} filterSelectedTeam={this.filterSelectedTeam} pageType={this.state.pageType} />
+                    {this.state.selectedTeam != null ? <><Pitch dreamTeam={this.state.dreamTeam} pageType={this.state.pageType} teamId={this.state.selectedTeamId} teamName={this.state.selectedTeamName}/></> : null} 
+                </div>
+            </div>
         )
     }
 }

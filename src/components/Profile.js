@@ -105,18 +105,21 @@ class Profile extends Component {
             <>
             <h2>Welcome, {localStorage.getItem("resource_owner_email")}</h2>
             <h3>Your teams:</h3>
-            <TeamList teams={this.state.teams}
-                      handleSelectedTeam={this.handleSelectedTeam}
-                      filterSelectedTeam={this.filterSelectedTeam}
-                      teamId={this.state.selectedTeamId}
-                      handleDelete={this.handleDelete}
-                      />
-            {this.state.selectedTeam != null ? <EditTeamContainer pageType="profile"
-                                                                  dreamTeam={this.state.dreamTeam}
-                                                                  filterSelectedTeam={this.filterSelectedTeam} 
-                                                                  teamId={this.state.selectedTeamId} 
-                                                                  teamName={this.state.selectedTeamName}
-                                                                  /> : null}
+            <div className='page-container'>
+                <TeamList teams={this.state.teams}
+                          handleSelectedTeam={this.handleSelectedTeam}
+                          filterSelectedTeam={this.filterSelectedTeam}
+                          teamId={this.state.selectedTeamId}
+                          handleDelete={this.handleDelete}
+                        />
+                {this.state.selectedTeam != null ? <EditTeamContainer pageType="profile"
+                                                                      dreamTeam={this.state.dreamTeam}
+                                                                      filterSelectedTeam={this.filterSelectedTeam} 
+                                                                      teamId={this.state.selectedTeamId} 
+                                                                      teamName={this.state.selectedTeamName}
+                                                                    /> : null}
+            </div>
+            
             </>
         )
     }

@@ -167,7 +167,7 @@ class EditTeamContainer extends Component {
 
     render() {
         return(
-            <>
+            <div id="edit-team-container">
             <Pitch dreamTeam={this.state.dreamTeam}
                    handleSave={this.handleSave}
                    handleTeamNameInput={this.handleTeamNameInput}
@@ -183,7 +183,7 @@ class EditTeamContainer extends Component {
                           onRadioButtonChange={this.onRadioButtonChange}
                           handlePlayerSelected={this.handlePlayerSelected}
                           />
-        </>
+        </div>
         )
     }
 }
