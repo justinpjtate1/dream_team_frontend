@@ -29,7 +29,7 @@ const App = (props) => {
 
   useEffect(() => {
     checkTokenValidity()
-  })
+  }, [])
 
   const checkTokenValidity = () => {
     if(auth === true) {

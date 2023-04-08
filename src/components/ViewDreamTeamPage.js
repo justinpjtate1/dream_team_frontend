@@ -1,8 +1,9 @@
 import React, { Component, useEffect, useState } from 'react';
 import axios from 'axios';
 import apiUrl from '../apiConfig';
+import TeamList from './TeamList';
 import Pitch from './Pitch';
-import PlayerList from './PlayerList';
+import PlayerSearch from './PlayerList';
 import '../view.css';
 
 class ViewDreamTeamPage extends Component {
@@ -10,128 +11,74 @@ class ViewDreamTeamPage extends Component {
         super(props)
 
         this.state = {
-            existingTeams: [],
-            selectedTeamId: null,
-            selectedTeamName: null,
-            updatePage: false,
+            teams: [],
+            selectedTeam: null,
+            selectedPlayers: [],
+            dreamTeam: {},
             pageType: "view",
-            selectedTeamObject: {
-                GK: {},
-                LB: {},
-                LCB: {},
-                RCB: {},
-                RB: {},
-                LM: {},
-                LCM: {},
-                RCM: {},
-                RM: {},
-                LS: {},
-                RS: {},
-            }
+            selectedTeamId: null,
+            selectedTeamName: null
         }
     }
 
     componentDidMount() {
+        this.showListOfTeams()
+        this.getAllCustomTeamsAndSelectedPlayers()
+    }
+
+    handleSelectedTeam = (index) => {
+        this.setState({
+            selectedTeam: index
+        }, this.filterSelectedTeam(index))
+    }
+
+    filterSelectedTeam = (index) => {
+        let teamId = this.state.teams[index].id
+        let filteredPlayersArray = this.state.selectedPlayers.filter(player => player.custom_team_id === teamId)
+        let dreamTeamObject = {}
+        filteredPlayersArray.map(player => dreamTeamObject[player.position] = {club_name: player.club_name, dob: player.dob, id: player.player_id, player_name: player.player_name})
+        this.setState({
+            dreamTeam: dreamTeamObject,
+            selectedTeamId: teamId,
+            selectedTeamName: this.state.teams[index].team_name
+        })
+    }
+
+    showListOfTeams = () => {
         axios.get(`${apiUrl}/custom_teams/show_teams`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
             }
         })
         .then((response) => {
-            if(this.props.pageType) {
-                let usersTeams = response.data.filter(team => team.user_id === +(localStorage.getItem("resource_owner_id")))
-                this.setState({
-                    existingTeams: usersTeams
-                })
-            } else {
-                this.setState({
-                    existingTeams: response.data
-                })
-            }
+            this.setState({
+                teams: response.data
+            })
         })
         .catch((error) => console.log(error))
-    }
-
-    getTeamDetails = (e) => {
-        this.setState({
-            selectedTeamId: +(e.target.value),
-            selectedTeamName: e.target.className
-        }, () => {
-            axios.post(`${apiUrl}/custom_teams/show_players`, {
-                custom_team_id: this.state.selectedTeamId
-            }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
-                }
-            })
-            .then((response) => {
-                const filterResponse = (positionKey, valueKey) => {
-                    return response.data.filter((player) => player.position === positionKey)[0][valueKey]
-                }
-                const playerObject = (key) => {
-                    return {
-                        club_name: filterResponse(key, "club_name"),
-                        dob: filterResponse(key, "dob"),
-                        id: filterResponse(key, "player_id"),
-                        player_name: filterResponse(key, "player_name")
-                    }
-                }
-                let teamObject = {
-                    GK: playerObject("GK"),
-                    LB: playerObject("LB"),
-                    LCB: playerObject("LCB"),
-                    RCB: playerObject("RCB"),
-                    RB: playerObject("RB"),
-                    LM: playerObject("LM"),
-                    LCM: playerObject("LCM"),
-                    RCM: playerObject("RCM"),
-                    RM: playerObject("RM"),
-                    LS: playerObject("LS"),
-                    RS: playerObject("RS")
-                }
-                this.setState({
-                    selectedTeamObject: teamObject
-                })
-            })
-            .then((response) => {
-                this.setState({
-                    updatePage: true
-                })
-            })
-            .catch((error) => console.log(error))
+      }
+    
+    getAllCustomTeamsAndSelectedPlayers = () => {
+        axios.get(`${apiUrl}/custom_teams/show_teams_players`, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
+        }
         })
-    }
-
-    deleteTeam = (e) => {
-        this.setState({
-            selectedTeamId: +(e.target.value),
-            selectedTeamName: e.target.className
-        }, () => {
-            // console.log(this.state.selectedTeamId)
-            axios.delete(`${apiUrl}/custom_teams/delete_team`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('refresh_token')}`
-                },
-                data: {
-                    custom_team_id: this.state.selectedTeamId
-                }
-            })
-            .then((response) => {
-                let newTeams = this.state.existingTeams.filter(team => team.id !== this.state.selectedTeamId)
-                this.setState({
-                    existingTeams: newTeams
-                })
+        .then((response) => {
+            this.setState({
+                selectedPlayers: response.data
             })
         })
-    }
+        .catch((error) => console.log(error))
+      }
 
     render() {
         return(
-            <div id="dream-team-page">
-                {this.props.pageType ? <div id="team-list">{this.state.existingTeams.length > 0? <div id="all-teams">{this.state.existingTeams.map(team => <div className="team"><div key={team.id} id={team.id}><h3>{team.team_name}</h3><p>{team.email}</p><button value={team.id} className={team.team_name} onClick={this.getTeamDetails}>Update Team</button><button value={team.id} className={team.team_name} onClick={this.deleteTeam}>Delete Team</button></div></div>)}</div> : null}
-                {this.state.updatePage === true ? <PlayerList dreamTeam={this.state.selectedTeamObject} pageType={this.props.pageType} teamName={this.state.selectedTeamName} teamId={this.state.selectedTeamId}/> : null}</div> : <div id="view-teams-container">{this.state.existingTeams.length > 0? <div className="team-list">{this.state.existingTeams.map(team => <div key={team.id}><h3>{team.team_name}</h3><p>{team.email}</p><button value={team.id} id={team.team_name} onClick={this.getTeamDetails}>Show Team</button></div>)}</div> : null}
-                {this.state.selectedTeamId !== null ? <Pitch dreamTeam={this.state.selectedTeamObject} pageType={this.state.pageType} teamName={this.state.selectedTeamName} /> : null}</div>}
-            </div>
+            <>
+            <h1>See all teams:</h1>
+            <TeamList teams={this.state.teams} handleSelectedTeam={this.handleSelectedTeam} filterSelectedTeam={this.filterSelectedTeam} pageType={this.state.pageType} />
+            {this.state.selectedTeam != null ? <><Pitch dreamTeam={this.state.dreamTeam} pageType={this.state.pageType} teamId={this.state.selectedTeamId} teamName={this.state.selectedTeamName}/></> : null}
+            </>
         )
     }
 }

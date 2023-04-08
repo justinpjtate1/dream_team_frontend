@@ -73,8 +73,6 @@ const Pitch = (props) => {
                     </div>
                 </div>
             </div>
-            {props.pageType !== "view" ? <button onClick={() => props.handleSave()}>Save</button> : null}
-
         </div>
         
     )
