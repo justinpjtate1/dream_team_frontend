@@ -10,7 +10,6 @@ import axios from 'axios';
 import apiUrl from '../apiConfig';
 import TeamList from './TeamList';
 import Pitch from './Pitch';
-import '../profile.css';
 import EditTeamContainer from './EditTeamContainer';
 
 class Profile extends Component {
@@ -103,8 +102,8 @@ class Profile extends Component {
     render() {
         return(
             <>
-            <h2>Welcome, {localStorage.getItem("resource_owner_email")}</h2>
-            <h3>Your teams:</h3>
+            <h1>Welcome, {localStorage.getItem("resource_owner_email")}</h1>
+            <h2>Your teams</h2>
             <div className='page-container'>
                 <TeamList teams={this.state.teams}
                           handleSelectedTeam={this.handleSelectedTeam}

@@ -150,7 +150,7 @@ const PlayerList = (props) => {
                    pageType={props.pageType === "profile" ? "profile" : null}
                     />
             <div id="search-container">
-                <h1>Player List</h1>
+                <h2>Player List</h2>
                 <input type="text" placeholder="Player Name" onChange={handlePlayerInput}></input>
                 <button onClick={handlePlayerFilter}>Filter</button>
                 <input type="text" placeholder="Club" onChange={handleClubInput}></input>

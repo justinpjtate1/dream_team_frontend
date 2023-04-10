@@ -7,12 +7,13 @@ const PlayerSearch = (props) => {
 
         return(
             <div id="search-container">
-                <h1>Player List</h1>
+                <h2 id="player-search">Player Search</h2>
                 <input type="text" placeholder="Player Name" onChange={(e) => props.handlePlayerInput(e)}></input>
                 <button onClick={() => props.handlePlayerFilter()}>Filter</button>
                 <input type="text" placeholder="Club" onChange={(e) => props.handleClubInput(e)}></input>
                 <button onClick={() => props.handleClubFilter()}>Filter</button>
                 <div>
+                    {props.errorMessage}
                     {props.playersToShow.map((player, index) => <PlayerListItem playerName={player.player_name}
                                                                                 clubName={player.club_name} 
                                                                                 key={index}
