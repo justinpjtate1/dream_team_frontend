@@ -1,7 +1,7 @@
 let apiUrl;
 const apiUrls = {
     development: `http://localhost:3000`,
-    production: ``
+    production: `https://pure-plains-57513.herokuapp.com`
 }
 
 if(window.location.hostname === 'localhost') {
