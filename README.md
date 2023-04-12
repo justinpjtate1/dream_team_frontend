@@ -49,11 +49,11 @@ This was a solo project. Initially this took 5 days to complete, with 1 day late
 - Backend technologies [here](https://github.com/justinpjtate1/dream_team_backend)
 
 ## Planning
-- I had 2 different plans: An MVP plan and an ambitious plan. The main difference between the 2 is that in the MVP, I descoped the ability to comment on other users' teams. This a feature that would be developed in the future.
+- I had 2 different plans: An [MVP](./public/MVP%20Project.pdf) plan and an [ambitious](./public/Ambitious%20Project%204.pdf) plan. The main difference between the 2 is that in the MVP, I descoped the ability to comment on other users' teams. This a feature that would be developed in the future.
 
 - In the MVP plan, I sketched out 6 pages. I knew I'd need a landing page, separate sign-up and sign-in pages, a profile page, a create page and a view all page. Essentially I wanted the user to be able to add, modify and delete their own teams and also have the ability to view other users'. Some small features were missed (for example, the delete account functionality and the reset team functionality) but I felt like an MVP could be achieved without these features.
 
-- I had some user stories. Most were achieved, but some were descoped as they didn't feel completely necessary for the MVP
+- I had some [user stories](./public/Project%204%20user%20stories.pdf). Most were achieved, but some were descoped as they didn't feel completely necessary for the MVP
 
 - I also had an ERD, and this can be found in the backend [ReadMe](https://github.com/justinpjtate1/dream_team_backend)
 
@@ -63,11 +63,15 @@ Some of the pieces of code I would highlight:
 
 1. The use of the getDerviedStateFromProps():
 
+![](./public/getDerivedStateFromProps.png)
+
     I use same component in the create team section and the profile section. It's the EditTeamContainer component. This component renders the pitch component and the search player component, it also has some functions and states, one of the states in particular (`dreamTeam`) is an object that contains the list of players to render on the pitch component. 
     
     The issue I had using this component on the profile section was that I would want to select a team to edit and pass that team as an object to the `dreamTeam` state. This was an object that was passed down as a prop and I initally set the state `dreamTeam` to the prop if it existed, or a blank object if not. I ran into issues when I wanted to edit a second team, because although a different object was being passed into the props, the state wasn't updating to the new prop, which meant the team that was first selected was always the one getting updated. Using getDerviedStateFromProps() allowed me to update the team info in the `dreamTeam` state and allow the user to edit the correct team when making edits to multiple teams.
 
 2. Fading the background on the initial landing page:
+
+![](./public/FadedBackground.png)
 
     For the user experience, I wanted to fade the background image of the landing page to make the sign in and sign up buttons more prominent and more obvious to use. I experimented with a couple of different options before getting to my solution:
     - Firstly, I added an opacity to the whole component, which also meant that although the background faded, so did the buttons, and that was not the desired outcome.
@@ -76,14 +80,16 @@ Some of the pieces of code I would highlight:
 
 3. The use of useEffect():
 
+![](./public/UseEffect.png)
+
     Although useEffect() is commonly used, in the classes I took, we mostly learnt React.js using class components, so I've had limited experience with functional components and React Hooks. I used useState before, but it was good to learn another hook and use it effectively. In my code, I use it at the app level to check if the user's login token is still valid, and determines whether the user should be logged in or not.
 
 ## Challenges
 
-The main challenge was refactoring the code so the component usage was simplified. Previously I had a lot of logic in some of the child components and this didn't make a lot of sense upon reflection.
+The main challenge was refactoring the code so the component usage was simplified. Previously I had a lot of logic in some of the child components and this didn't make a lot of sense upon reflection. I think I could have split some of the child components up further and not relied on so much logic in child components to render what I needed. The aim of refactoring was to simplify the component usage as much as possible.
 
 ## Wins
-Fixing some of the bugs outlined above and some of the code refactoring. In it's current state, I haven't detected any functionality that doesn't function as expected, so that's good for future features.
+Fixing some of the bugs outlined above and some of the code refactoring. In it's current state, I haven't detected any functionality that doesn't function as expected and I can add more functionality.
 
 ## Key Learnings
 - Keep a lot of the logic in higher components where possible.
