@@ -63,7 +63,7 @@ Some of the pieces of code I would highlight:
 
 1. The use of the getDerviedStateFromProps():
 
-![](./public/getDerivedStateFromProps.png)
+    ![](./public/getDerivedStateFromProps.png)
 
     I use same component in the create team section and the profile section. It's the EditTeamContainer component. This component renders the pitch component and the search player component, it also has some functions and states, one of the states in particular (`dreamTeam`) is an object that contains the list of players to render on the pitch component. 
     
@@ -71,16 +71,19 @@ Some of the pieces of code I would highlight:
 
 2. Fading the background on the initial landing page:
 
-![](./public/FadedBackground.png)
+    ![](./public/FadedBackground.png)
 
     For the user experience, I wanted to fade the background image of the landing page to make the sign in and sign up buttons more prominent and more obvious to use. I experimented with a couple of different options before getting to my solution:
+
     - Firstly, I added an opacity to the whole component, which also meant that although the background faded, so did the buttons, and that was not the desired outcome.
+
     - Secondly, I tried uploading the background image inside a regular image element instead. I then moved the Z-index to a negative value and made the image really large. I could then fade the image element directly without having the buttons faded. I felt like although this solution worked, it didn't look so good when the window was resized.
+
     - Finally I realised I should make a div element that spans the whole of the area I wanted to cover with the background image and add the background image to that div tag. In the CSS, I added the opacity so the background image faded, I also set the background image to cover the screen, so I didn't have the issues with the sizing as before. I then had to add a separate div with the buttons inside them. As I was trying to cover the whole page with the other div, I first realised these were rendering below the initial view height. To change this, I added some CSS to the div that contained the buttons and set an absolute position with a higher z-index. I don't feel like this would have worked out well for pages with lots of different elements, but felt like it was the solution I was looking for with a page of this size.
 
 3. The use of useEffect():
 
-![](./public/UseEffect.png)
+    ![](./public/UseEffect.png)
 
     Although useEffect() is commonly used, in the classes I took, we mostly learnt React.js using class components, so I've had limited experience with functional components and React Hooks. I used useState before, but it was good to learn another hook and use it effectively. In my code, I use it at the app level to check if the user's login token is still valid, and determines whether the user should be logged in or not.
 
