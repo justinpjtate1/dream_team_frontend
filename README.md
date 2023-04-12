@@ -4,7 +4,7 @@
 
 </div>
 
-# Create your own dream teams ⚽️ :soccer:
+# Create your own dream teams :soccer:
 
 ## Deployment
 
