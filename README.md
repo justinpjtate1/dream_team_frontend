@@ -103,5 +103,6 @@ Fixing some of the bugs outlined above and some of the code refactoring. In it's
 - Allowing users to select different formations - the refactoring here would also make the code a bit cleaner (especially for the pitch component).
 - Allowing users to comment on each other's teams
 - Styling improvements
+- Use of Bootstrap and other React technologies
 - User voting
 - More players included
